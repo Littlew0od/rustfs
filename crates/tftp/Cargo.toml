@@ -1,0 +1,63 @@
+[package]
+name = "rustfs-tftp"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+version.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories = ["development-tools", "web-programming"]
+authors.workspace = true
+description = "RustFS TFTP Server"
+
+[[bin]]
+name = "rustfs-tftp"
+path = "src/main.rs"
+
+# 排序顺序需要进一步整理
+[dependencies]
+# AWS SDK for S3 operations
+aws-sdk-s3 = { workspace = true, features = ["rt-tokio"] }
+aws-smithy-http-client = { workspace = true, features = ["default-client"] }
+
+# TFTP Server of Async
+async-tftp = "0.4.2"
+
+# Command line argument parsing
+clap = { workspace = true, features = ["derive", "env"] }
+
+# Error handling
+anyhow.workspace = true
+
+# Async runtime and utilities
+# fs for file ops, rt for spawn, process for signal
+tokio = { workspace = true, features = [
+    "fs",
+    "io-std",
+    "io-util",
+    "macros",
+    "process",
+    "rt-multi-thread",
+    "signal",
+] }
+
+# Serialization (still needed for S3 data structures)
+serde = { workspace = true, features = ["derive"] }
+serde_json.workspace = true
+
+# Logging
+tracing.workspace = true
+tracing-subscriber = { workspace = true, features = ["env-filter"] }
+
+# File handling and MIME type detection
+mime_guess = { workspace = true }
+
+blocking = "1.6.2"
+futures-lite = "2.6"
+tempfile = "3"
+
+uuid = { workspace = true, features = ["v4", "fast-rng"] }
+
+[lints]
+workspace = true
