@@ -61,6 +61,7 @@ members = [
     "crates/io-metrics", # I/O metrics collection for performance analysis
     "crates/io-core", # Buffered Bytes, mmap-then-copy, and aligned pread I/O helpers
     "crates/zip", # ZIP file handling and compression
+    "crates/tftp", # TFTP server implementation
 ]
 resolver = "3"
 
@@ -132,6 +133,7 @@ rustfs-test-utils = { path = "crates/test-utils", version = "1.0.0-beta.10" }
 rustfs-tls-runtime = { path = "crates/tls-runtime", version = "1.0.0-beta.10" }
 rustfs-utils = { path = "crates/utils", version = "1.0.0-beta.10" }
 rustfs-zip = { path = "./crates/zip", version = "1.0.0-beta.10" }
+rustfs-tftp = { path = "./crates/tftp", version = "1.0.0-beta.10" }
 
 # Async Runtime and Networking
 async-channel = "2.5.0"
