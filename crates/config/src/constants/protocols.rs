@@ -172,6 +172,10 @@ pub const DEFAULT_SFTP_BANNER: &str = "SSH-2.0-RustFS";
 
 /// Default TFTP server bind address
 pub const DEFAULT_TFTP_ADDRESS: &str = "0.0.0.0:6969";
+// 还没有被使用
+pub const DEFAULT_TFTP_ACCESS_MODE: &str = "rw";
+pub const DEFAULT_TFTP_PART_SIZE: u64 = 16_777_216; // 16 MiB
+pub const DEFAULT_TFTP_CONCURRENCY_LIMITS: u64 = 100;
 
 /// TFTP environment variable names
 pub const ENV_TFTP_ENABLE: &str = "RUSTFS_TFTP_ENABLE";
@@ -179,3 +183,14 @@ pub const ENV_TFTP_ADDRESS: &str = "RUSTFS_TFTP_ADDRESS";
 pub const ENV_TFTP_DEFAULT_BUCKET: &str = "RUSTFS_TFTP_DEFAULT_BUCKET";
 pub const ENV_TFTP_ACCESS_MODE: &str = "RUSTFS_TFTP_ACCESS_MODE";
 pub const ENV_TFTP_ACCESS_KEY: &str = "RUSTFS_TFTP_ACCESS_KEY";
+/// S3 multipart part size in bytes. Default DEFAULT_SFTP_PART_SIZE (16 MiB).
+/// Valid range 5 MiB to 5 GiB (S3 protocol bounds), enforced at startup.
+///
+/// The per-upload size ceiling is part_size * 10_000 (the S3 parts cap),
+/// so the default caps single uploads at 160 GiB. Deployments expecting
+/// larger single files must raise this: 64 MiB -> 640 GiB, 128 MiB ->
+/// 1.25 TiB, 512 MiB -> 5 TiB (S3 object max). Rename is not affected;
+/// multipart_copy scales the per-part size dynamically and handles up
+/// to the 5 TiB S3 object limit regardless of this setting.
+pub const ENV_TFTP_PART_SIZE: &str = "RUSTFS_TFTP_PART_SIZE";
+pub const ENV_TFTP_CONCURRENCY_LIMITS: &str = "RUSTFS_TFTP_CONCURRENCY_LIMITS";

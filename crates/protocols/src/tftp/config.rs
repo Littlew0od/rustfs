@@ -75,6 +75,10 @@ pub struct TftpConfig {
     pub access_key: String,
     /// Access mode for the TFTP server.
     pub mode: TftpAccessMode,
+    /// Part size for multipart uploads. Configured via RUSTFS_TFTP_PART_SIZE.
+    pub part_size: u64,
+    /// Concurrency limits for multipart uploads. Configured via RUSTFS_TFTP_CONCURRENCY_LIMITS.
+    pub concurrency_limits: u64,
 }
 
 impl TftpConfig {
@@ -88,13 +92,15 @@ impl TftpConfig {
     }
 }
 
-impl Default for TftpConfig {
-    fn default() -> Self {
-        TftpConfig {
-            bind_addr: crate::constants::defaults::DEFAULT_TFTP_ADDRESS.parse().unwrap(),
-            default_bucket: None,
-            access_key: "".to_owned(),
-            mode: TftpAccessMode::ReadWrite,
-        }
-    }
-}
+// impl Default for TftpConfig {
+//     fn default() -> Self {
+//         TftpConfig {
+//             bind_addr: crate::constants::defaults::DEFAULT_TFTP_ADDRESS.parse().unwrap(),
+//             default_bucket: None,
+//             access_key: "".to_owned(),
+//             mode: TftpAccessMode::ReadWrite,
+//             part_size: crate::constants::defaults::DEFAULT_TFTP_PART_SIZE,
+//             concurrency_limits: crate::constants::defaults::DEFAULT_TFTP_CONCURRENCY_LIMITS,
+//         }
+//     }
+// }

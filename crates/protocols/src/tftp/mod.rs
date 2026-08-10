@@ -44,7 +44,11 @@
 
 pub mod config;
 pub mod handler;
+pub mod path;
+pub mod read;
 pub mod server;
+pub mod state;
+pub mod write;
 
 pub use config::{TftpAccessMode, TftpConfig, TftpInitError};
 pub use server::TftpServer;

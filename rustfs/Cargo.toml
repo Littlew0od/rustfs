@@ -57,7 +57,7 @@ name = "swift_object_integration_test"
 required-features = ["swift"]
 
 [features]
-default = ["ftps", "webdav"]
+default = ["ftps", "webdav", "tftp", "sftp"]
 metrics-gpu = ["rustfs-obs/gpu"]
 ftps = ["rustfs-protocols/ftps"]
 swift = ["rustfs-protocols/swift"]

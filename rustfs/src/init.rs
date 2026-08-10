@@ -1382,8 +1382,8 @@ pub async fn init_sftp_system() -> Result<Option<ShutdownHandle>, Box<dyn std::e
 pub async fn init_tftp_system() -> Result<Option<ShutdownHandle>, Box<dyn std::error::Error + Send + Sync>> {
     use crate::protocols::ProtocolStorageClient;
     use rustfs_config::{
-        DEFAULT_TFTP_ADDRESS, ENV_TFTP_ACCESS_KEY, ENV_TFTP_ACCESS_MODE, ENV_TFTP_ADDRESS, ENV_TFTP_DEFAULT_BUCKET,
-        ENV_TFTP_ENABLE,
+        DEFAULT_TFTP_ADDRESS, DEFAULT_TFTP_CONCURRENCY_LIMITS, DEFAULT_TFTP_PART_SIZE, ENV_TFTP_ACCESS_KEY, ENV_TFTP_ACCESS_MODE,
+        ENV_TFTP_ADDRESS, ENV_TFTP_CONCURRENCY_LIMITS, ENV_TFTP_DEFAULT_BUCKET, ENV_TFTP_ENABLE, ENV_TFTP_PART_SIZE,
     };
     use rustfs_protocols::{TftpAccessMode, TftpConfig, TftpInitError, TftpServer};
     use std::str::FromStr;
@@ -1440,6 +1440,9 @@ pub async fn init_tftp_system() -> Result<Option<ShutdownHandle>, Box<dyn std::e
         access_key = rustfs_credentials::get_global_access_key();
     }
 
+    let part_size = rustfs_utils::get_env_u64(ENV_TFTP_PART_SIZE, DEFAULT_TFTP_PART_SIZE);
+    let concurrency_limits = rustfs_utils::get_env_u64(ENV_TFTP_CONCURRENCY_LIMITS, DEFAULT_TFTP_CONCURRENCY_LIMITS);
+
     let config = TftpConfig {
         bind_addr: addr,
         default_bucket: if default_bucket.is_empty() {
@@ -1449,6 +1452,8 @@ pub async fn init_tftp_system() -> Result<Option<ShutdownHandle>, Box<dyn std::e
         },
         access_key,
         mode,
+        part_size,
+        concurrency_limits,
     };
 
     config.validate().await?;
