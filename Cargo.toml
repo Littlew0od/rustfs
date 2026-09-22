@@ -365,6 +365,9 @@ russh-sftp = "2.4.0"
 # WebDAV
 dav-server = "0.11.0"
 
+# TFTP
+async-tftp = "0.4.2"
+
 # Performance Analysis and Memory Profiling
 rustfs-mimalloc = { version = "0.5.1" }
 hotpath = { version = "0.24.0", default-features = false }
